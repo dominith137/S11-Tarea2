@@ -4,12 +4,12 @@ import org.usil.model.Cliente;
 import org.usil.model.Comprobante;
 import org.usil.model.Pedido;
 import org.usil.model.Producto;
-import org.usil.repository.PedidoRepository;
 import org.usil.service.ComprobanteService;
 import org.usil.service.FacturaService;
 import org.usil.service.ImpuestoService;
 import org.usil.service.PedidoService;
 import org.usil.service.StockService;
+import org.usil.strategy.ImpuestoStrategy;
 
 
 public class PedidoFacade {
@@ -19,20 +19,22 @@ public class PedidoFacade {
     private PedidoService pedidoService;
     private FacturaService facturaService;
     private ComprobanteService comprobanteService;
-    private PedidoRepository pedidoRepository;
     
     public PedidoFacade(StockService stockService, 
                        ImpuestoService impuestoService,
                        PedidoService pedidoService,
                        FacturaService facturaService,
-                       ComprobanteService comprobanteService,
-                       PedidoRepository pedidoRepository) {
+                       ComprobanteService comprobanteService) {
         this.stockService = stockService;
         this.impuestoService = impuestoService;
         this.pedidoService = pedidoService;
         this.facturaService = facturaService;
         this.comprobanteService = comprobanteService;
-        this.pedidoRepository = pedidoRepository;
+    }
+    
+    //Permite elegir qué estrategia de impuestos usar antes de procesar el pedido
+    public void establecerEstrategiaImpuesto(ImpuestoStrategy estrategia) {
+        impuestoService.setEstrategia(estrategia);
     }
 
     public Comprobante procesarPedido(Cliente cliente, Producto producto, int cantidad) {

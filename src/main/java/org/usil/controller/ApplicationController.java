@@ -8,6 +8,7 @@ import org.usil.service.ComprobanteService;
 import org.usil.service.ImpuestoService;
 import org.usil.service.PedidoService;
 import org.usil.service.StockService;
+import org.usil.strategy.IGV18Strategy;
 import org.usil.view.PedidoView;
 
 public class ApplicationController {
@@ -21,7 +22,8 @@ public class ApplicationController {
     private void inicializarSistema() {
 
         StockService stockService = new StockService();
-        ImpuestoService impuestoService = new ImpuestoService();
+        IGV18Strategy estrategiaDefault = new IGV18Strategy();
+        ImpuestoService impuestoService = new ImpuestoService(estrategiaDefault);
         PedidoRepository pedidoRepository = new PedidoRepository();
         PedidoService pedidoService = new PedidoService(pedidoRepository);
         ComprobanteService comprobanteService = new ComprobanteService();
@@ -34,8 +36,7 @@ public class ApplicationController {
             impuestoService,
             pedidoService,
             facturaAdapter,
-            comprobanteService,
-            pedidoRepository
+            comprobanteService
         );
 
         PedidoController pedidoController = new PedidoController(pedidoFacade);
