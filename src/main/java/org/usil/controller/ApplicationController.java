@@ -41,7 +41,7 @@ public class ApplicationController {
 
         PedidoController pedidoController = new PedidoController(pedidoFacade);
 
-        this.view = new PedidoView(pedidoController, pedidoFacade);
+        this.view = new PedidoView(pedidoController, pedidoFacade, pedidoRepository);
     }
     
     public void iniciar() {
