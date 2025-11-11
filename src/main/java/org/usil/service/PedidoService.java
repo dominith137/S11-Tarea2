@@ -2,8 +2,15 @@ package org.usil.service;
 
 import org.usil.model.Pedido;
 import org.usil.model.Producto;
+import org.usil.repository.PedidoRepository;
 
 public class PedidoService {
+
+    private PedidoRepository pedidoRepository;
+    
+    public PedidoService(PedidoRepository pedidoRepository) {
+        this.pedidoRepository = pedidoRepository;
+    }
 
     public boolean registrarPedido(Pedido pedido) {
         // Actualizar el stock del producto
@@ -12,7 +19,8 @@ public class PedidoService {
         int cantidadPedida = pedido.getCantidad();
         producto.setStock(stockActual - cantidadPedida);
 
-        return true;
+        // Guardar el pedido usando el repositorio
+        return pedidoRepository.guardar(pedido);
     }
 }
 

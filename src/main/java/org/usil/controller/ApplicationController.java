@@ -3,6 +3,7 @@ package org.usil.controller;
 import org.usil.adapter.FacturaAdapter;
 import org.usil.facade.PedidoFacade;
 import org.usil.legacy.LegacyBillingSystem;
+import org.usil.repository.PedidoRepository;
 import org.usil.service.ComprobanteService;
 import org.usil.service.ImpuestoService;
 import org.usil.service.PedidoService;
@@ -21,7 +22,8 @@ public class ApplicationController {
 
         StockService stockService = new StockService();
         ImpuestoService impuestoService = new ImpuestoService();
-        PedidoService pedidoService = new PedidoService();
+        PedidoRepository pedidoRepository = new PedidoRepository();
+        PedidoService pedidoService = new PedidoService(pedidoRepository);
         ComprobanteService comprobanteService = new ComprobanteService();
 
         LegacyBillingSystem legacySystem = new LegacyBillingSystem();
@@ -32,7 +34,8 @@ public class ApplicationController {
             impuestoService,
             pedidoService,
             facturaAdapter,
-            comprobanteService
+            comprobanteService,
+            pedidoRepository
         );
 
         PedidoController pedidoController = new PedidoController(pedidoFacade);
